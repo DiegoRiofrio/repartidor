@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Repartidor</string>
+
+    <string name="btn_addReparto">Agregar Reparto</string>
+<!-- LOGIN-->
+    <string name="signed_in">Signed in!</string>
+    <string name="signed_out">Signed out!</string>
+    <string name="signed_cancelled">Signed in cancelled</string>
+    <string name="logout_button">Logout</string>
+    <string name="firebase_user_fmt">Reoartidor Email: %s</string>
+
+
+    <string name="sign_in">Sign In</string>
+    <string name="register">REGISTER</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="logKo">Usuario y/o contraseña erroneo.</string>
+
+</resources>
