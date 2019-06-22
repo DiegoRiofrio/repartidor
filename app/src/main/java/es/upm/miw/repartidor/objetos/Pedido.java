@@ -2,20 +2,21 @@ package es.upm.miw.repartidor.objetos;
 
 import es.upm.miw.repartidor.estado.Estado;
 
-public class Reparto {
-    int articulos;
-    String cliente;
-    String direccion;
-    Estado estado;
+public class Pedido {
+    private String referencia;
+    private Integer articulos;
+    private String cliente;
+    private String direccion;
+    private Estado estado;
 
-    public Reparto(int articulos, String cliente, String direccion, Estado estado) {
+    public Pedido(int articulos, String cliente, String direccion, Estado estado) {
         this.articulos = articulos;
         this.cliente = cliente;
         this.direccion = direccion;
         this.estado = estado;
     }
 
-    public Reparto() {
+    public Pedido() {
     }
 
     public int getArticulos() {
@@ -48,5 +49,13 @@ public class Reparto {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 }

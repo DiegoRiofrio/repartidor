@@ -1,5 +1,6 @@
 package es.upm.miw.repartidor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,9 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user =firebaseAuth.getCurrentUser();
                 if (user != null){
-                    //CharSequence username = user.getDisplayName();
                     Toast.makeText(MainActivity.this, getString(R.string.firebase_user_fmt, user.getEmail()), Toast.LENGTH_LONG).show();
                     Log.i("SESION", "sesion iniciada con el email:" + user.getEmail());
+                    Intent intent = new Intent(getApplicationContext(),RepartosActivity.class);
+                    startActivity(intent);
                 }else {
                     Log.i("SESION","sesion cerrada");
                 }
@@ -102,5 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
     }
+
+
 }
 

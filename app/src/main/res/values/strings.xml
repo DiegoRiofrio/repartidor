@@ -7,7 +7,7 @@
     <string name="signed_out">Signed out!</string>
     <string name="signed_cancelled">Signed in cancelled</string>
     <string name="logout_button">Logout</string>
-    <string name="firebase_user_fmt">Reoartidor Email: %s</string>
+    <string name="firebase_user_fmt">Repartidor Email: %s</string>
 
 
     <string name="sign_in">Sign In</string>
@@ -15,5 +15,18 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="logKo">Usuario y/o contraseña erroneo.</string>
+
+
+    <!-- REPARTOS-->
+
+    <string name="Articulos">nº articulos</string>
+    <string name="Estado">Estado del pedido</string>
+    <string name="Direccion">Dirección</string>
+    <string name="Cliente">Nombre Cliente</string>
+    <string name="AddPedido">Añadir al Reparto</string>
+    <string name="ModifyPedido">Modificar Pedido</string>
+    <string name="DeletePedido">Borrar Pedido</string>
+    <string name="ListPedidos">Lista de Pedidos</string>
+
 
 </resources>
