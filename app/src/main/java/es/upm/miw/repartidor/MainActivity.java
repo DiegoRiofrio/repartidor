@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }else {
                     Log.i("SESION","sesion cerrada");
+                    Toast.makeText(getApplicationContext(), "sesion cerrada", Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()){
                     Log.i("SESION","usuario creado correctamente");
                 }else {
+                    clear();
                     Toast.makeText(getApplicationContext(), R.string.logKo, Toast.LENGTH_LONG).show();
                     Log.e("SESION",task.getException().getMessage()+"");
                 }
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()){
                     Log.i("SESION","sesion iniciada");
                 }else {
+                    Toast.makeText(getApplicationContext(), "Usuario o Contraseña No Validos!", Toast.LENGTH_LONG).show();
                     Log.e("SESION",task.getException().getMessage()+"");
                 }
             }
@@ -85,15 +88,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonSignIn:
                 String emailInicio = fieldEmail.getText().toString();
                 String passInicio = fieldPassword.getText().toString();
-                iniciarSesion(emailInicio,passInicio);
+
+                if (emailInicio.isEmpty()||passInicio.isEmpty()){
+                    validate();
+                }
+                else {
+                    iniciarSesion(emailInicio,passInicio);
+                }
+                clear();
                 break;
             case  R.id.buttonRegister:
                 String emailReg = fieldEmail.getText().toString();
                 String passReg = fieldPassword.getText().toString();
-                registrar(emailReg,passReg);
+                if (emailReg.isEmpty()||passReg.isEmpty()){
+                    validate();
+                }
+                else {
+                    registrar(emailReg, passReg);
+                }
+                clear();
                 break;
+             default:break;
         }
     }
+
+    private void validate() {
+        String email = fieldEmail.getText().toString();
+        String pass = fieldPassword.getText().toString();
+
+        if (email.isEmpty()){
+            fieldEmail.setError("Required");
+        }
+        else if (pass.isEmpty()){
+            fieldPassword.setError("Required");
+        }
+    }
+
+    private void clear() {
+        fieldEmail.setText("");
+        fieldPassword.setText("");
+    }
+
     protected void onStart(){
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
@@ -105,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onDestroy() {
+        //this.firebaseLogin.signOut();
+        super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
+
+    }
 
 }
 

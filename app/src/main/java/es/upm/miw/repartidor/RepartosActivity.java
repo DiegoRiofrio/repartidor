@@ -104,21 +104,21 @@ public class RepartosActivity extends AppCompatActivity {
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
-            Integer articulos = Integer.parseInt(numA.getText().toString());
+            //Integer articulos = Integer.parseInt(numA.getText().toString());
             String cliente = nomC.getText().toString();
             String direccion = dirP.getText().toString();
             String estado = estP.getText().toString();
 
         switch (item.getItemId()) {
             case R.id.icon_add:{
-                if(((articulos.equals("")) ||cliente.equals("")||direccion.equals("")||estado.equals(""))){
+                if(((numA.getText().toString().isEmpty()) ||cliente.isEmpty()||direccion.equals("")||estado.equals(""))){
                     validacion();
 
                 }
                 else {
                     Pedido p = new Pedido();
                     p.setReferencia(UUID.randomUUID().toString());
-                    p.setArticulos(articulos);
+                    p.setArticulos(Integer.valueOf(numA.getText().toString()));
                     p.setCliente(cliente);
                     p.setDireccion(direccion);
                     p.setEstado(estado);
@@ -147,6 +147,7 @@ public class RepartosActivity extends AppCompatActivity {
             }
             case R.id.icon_wifi:{
                 exit();
+                Toast.makeText(this, "Adios ", Toast.LENGTH_LONG).show();
                 break;
             }
             case R.id.icon_exit:{
