@@ -142,7 +142,10 @@ public class RepartosActivity extends AppCompatActivity {
                 break;
             }
             case R.id.icon_del:{
-                exit();
+                Pedido p = new Pedido();
+                p.setReferencia(pedidoSelected.getReferencia());
+                repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).removeValue();
+                limpiarCajas();
                 break;
             }
             case R.id.icon_wifi:{
