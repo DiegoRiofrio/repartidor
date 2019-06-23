@@ -1,5 +1,5 @@
 package es.upm.miw.repartidor.objetos;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import es.upm.miw.repartidor.estado.Estado;
 
 public class Pedido {
@@ -7,18 +7,26 @@ public class Pedido {
     private Integer articulos;
     private String cliente;
     private String direccion;
-    //private Estado estado;
-    private String estado;
+    private Estado estado;
+    private Estado entregado;
+    private String fecha_registro;
+    private String fecha_entrega;
 
-    public Pedido(String referencia, int articulos, String cliente, String direccion, String estado) {
+    public Pedido(String referencia, Integer articulos, String cliente, String direccion, Estado estado, Estado entregado, String fecha_registro, String fecha_entrega) {
+        this.referencia = referencia;
         this.articulos = articulos;
         this.cliente = cliente;
         this.direccion = direccion;
         this.estado = estado;
+        this.entregado = entregado;
+        this.fecha_registro = fecha_registro;
+        this.fecha_entrega = fecha_entrega;
     }
 
     public Pedido() {
     }
+
+
 
     public String getReferencia() {
         return referencia;
@@ -51,13 +59,37 @@ public class Pedido {
     }
 
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
+    public String getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(String fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
+    public String getFecha_entrega() {
+        return fecha_entrega;
+    }
+
+    public void setFecha_entrega(String fecha_entrega) {
+        this.fecha_entrega = fecha_entrega;
+    }
+
+    public Estado getEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(Estado entregado) {
+        this.entregado = entregado;
+    }
     public String toString() {return direccion; }
+
 }
 

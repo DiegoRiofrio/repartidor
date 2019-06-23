@@ -20,7 +20,9 @@
     <!-- REPARTOS-->
 
     <string name="Articulos">nº articulos</string>
-    <string name="Estado">Estado del pedido</string>
+    <string name="Estado">Detalle estado del pedido</string>
+    <string name="Registrado">Registro fecha</string>
+    <string name="Entregado">Pendiente de entrega</string>
     <string name="Direccion">Dirección</string>
     <string name="Cliente">Nombre Cliente</string>
     <string name="AddPedido">Añadir al Reparto</string>

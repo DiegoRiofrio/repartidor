@@ -16,14 +16,12 @@
 
     <item android:id="@+id/icon_del"
         android:icon="@drawable/ic_del"
-        android:title="@string/DeletePedido"
-        app:showAsAction="always"/>
-    <item android:id="@+id/icon_wifi"
-        android:icon="@drawable/ic_wifi"
+        android:title="@string/DeletePedido" />
+    <item android:id="@+id/icon_entrega"
+        android:icon="@drawable/ic_entrega"
         android:title="@string/buscarWifi"
         app:showAsAction="always"/>
     <item android:id="@+id/icon_exit"
         android:icon="@drawable/ic_exit"
-        android:title="@string/Salir"
-        app:showAsAction="always"/>
+        android:title="@string/Salir" />
 </menu>
