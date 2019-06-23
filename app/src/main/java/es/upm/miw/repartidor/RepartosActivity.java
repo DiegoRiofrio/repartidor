@@ -4,16 +4,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import es.upm.miw.repartidor.estado.Estado;
@@ -22,11 +31,17 @@ import es.upm.miw.repartidor.objetos.Pedido;
 
 public class RepartosActivity extends AppCompatActivity {
 
+        private List<Pedido> listPedido = new ArrayList<Pedido>();
+        ArrayAdapter<Pedido>arrayAdapterPedido;
+
         Button buttonReparto;
         EditText numA, nomC, dirP, estP;
-        ListView ListV_pedidos;
+        ListView listV_pedidos;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        Pedido pedidoSelected;
+
     final DatabaseReference repartidorRef = database.getReference(FirebaseReferences.REPARTIDOR_REFERENCE);
 
         @Override
@@ -34,25 +49,52 @@ public class RepartosActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_repartos);
 
-            buttonReparto = (Button) findViewById(R.id.boton_reparto);
+           // buttonReparto = (Button) findViewById(R.id.boton_reparto);
 
             numA = findViewById(R.id.txt_NumArticulos);
             nomC = findViewById(R.id.txt_Cliente);
             dirP = findViewById(R.id.txt_Direccion);
             estP = findViewById(R.id.txt_Estado);
 
-            ListV_pedidos = findViewById(R.id.listaPedidos);
+            listV_pedidos = findViewById(R.id.listaPedidos);
 
+            listaDatos();
 
-            buttonReparto.setOnClickListener(new View.OnClickListener() {
+            listV_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Pedido reparto = new Pedido(5,"Pepe", "calle buena vista", Estado.PROCESADO);
-                    repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).push().setValue(reparto);
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    pedidoSelected = (Pedido) parent.getItemAtPosition(position);
+                    numA.setText(String.valueOf(pedidoSelected.getArticulos()));
+                    nomC.setText(pedidoSelected.getCliente());
+                    dirP.setText(pedidoSelected.getDireccion());
+                    estP.setText(pedidoSelected.getEstado());
+
                 }
             });
 
         }
+
+    private void listaDatos() {
+            repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    listPedido.clear();
+                    for (DataSnapshot objSnapshot : dataSnapshot.getChildren()){
+                        Pedido p = objSnapshot.getValue(Pedido.class);
+                        listPedido.add(p);
+
+                        arrayAdapterPedido = new ArrayAdapter<Pedido>(RepartosActivity.this, android.R.layout.simple_list_item_1, listPedido);
+                        listV_pedidos.setAdapter(arrayAdapterPedido);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+    }
 
     public boolean onCreateOptionsMenu(Menu menu){
             super.onCreateOptionsMenu(menu);
@@ -69,7 +111,7 @@ public class RepartosActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.icon_add:{
-                if(((articulos == null) ||cliente.equals("")||direccion.equals("")||estado.equals(""))){
+                if(((articulos.equals("")) ||cliente.equals("")||direccion.equals("")||estado.equals(""))){
                     validacion();
 
                 }
@@ -79,18 +121,36 @@ public class RepartosActivity extends AppCompatActivity {
                     p.setArticulos(articulos);
                     p.setCliente(cliente);
                     p.setDireccion(direccion);
-                    // repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).push().setValue(p);
+                    p.setEstado(estado);
                     repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
+                    Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
                     limpiarCajas();
                 }
 
                 break;
             }
             case R.id.icon_modify:{
-                onBackPressed();
+                Pedido p = new Pedido();
+                p.setReferencia(pedidoSelected.getReferencia());
+                p.setArticulos(Integer.parseInt(numA.getText().toString().trim()));
+                p.setCliente(nomC.getText().toString().trim());
+                p.setDireccion(dirP.getText().toString().trim());
+                p.setEstado(estP.getText().toString().trim());
+                repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
+                Toast.makeText(this, "Modificado", Toast.LENGTH_LONG).show();
+                limpiarCajas();
                 break;
             }
             case R.id.icon_del:{
+                exit();
+                break;
+            }
+            case R.id.icon_wifi:{
+                exit();
+                break;
+            }
+            case R.id.icon_exit:{
+                Toast.makeText(this, "Adios ", Toast.LENGTH_LONG).show();
                 exit();
                 break;
             }
@@ -107,12 +167,13 @@ public class RepartosActivity extends AppCompatActivity {
     }
 
     private void validacion() {
-            String cliente = nomC.getText().toString();
+        Integer articulos = Integer.valueOf(numA.getText().toString());
+        String cliente = nomC.getText().toString();
         String direccion = dirP.getText().toString();
         String estado = estP.getText().toString();
-        Integer articulos = Integer.valueOf(numA.getText().toString());
 
-        if (articulos == null){
+
+        if (articulos.equals("")){
             numA.setError("Requiered");
         }
         else if (cliente.equals("")){

@@ -1,5 +1,5 @@
 package es.upm.miw.repartidor.objetos;
-
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import es.upm.miw.repartidor.estado.Estado;
 
 public class Pedido {
@@ -7,9 +7,10 @@ public class Pedido {
     private Integer articulos;
     private String cliente;
     private String direccion;
-    private Estado estado;
+    //private Estado estado;
+    private String estado;
 
-    public Pedido(int articulos, String cliente, String direccion, Estado estado) {
+    public Pedido(String referencia, int articulos, String cliente, String direccion, String estado) {
         this.articulos = articulos;
         this.cliente = cliente;
         this.direccion = direccion;
@@ -19,14 +20,20 @@ public class Pedido {
     public Pedido() {
     }
 
-    public int getArticulos() {
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+    public Integer getArticulos() {
         return articulos;
     }
 
-    public void setArticulos(int articulos) {
+    public void setArticulos(Integer articulos) {
         this.articulos = articulos;
     }
-
     public String getCliente() {
         return cliente;
     }
@@ -43,19 +50,14 @@ public class Pedido {
         this.direccion = direccion;
     }
 
-    public Estado getEstado() {
+
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    public String getReferencia() {
-        return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
-    }
+    public String toString() {return direccion; }
 }
+

@@ -26,6 +26,8 @@
     <string name="AddPedido">Añadir al Reparto</string>
     <string name="ModifyPedido">Modificar Pedido</string>
     <string name="DeletePedido">Borrar Pedido</string>
+    <string name="buscarWifi">Buscar Wifi</string>
+    <string name="Salir">Salir</string>
     <string name="ListPedidos">Lista de Pedidos</string>
 
 
