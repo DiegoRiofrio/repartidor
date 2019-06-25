@@ -8,24 +8,29 @@ public class Pedido {
     private String cliente;
     private String direccion;
     private Estado estado;
+    private Estado encamino;
     private Estado entregado;
     private String fecha_registro;
+    private String fecha_encamino;
     private String fecha_entrega;
 
-    public Pedido(String referencia, Integer articulos, String cliente, String direccion, Estado estado, Estado entregado, String fecha_registro, String fecha_entrega) {
+
+
+    public Pedido() {
+    }
+
+    public Pedido(String referencia, Integer articulos, String cliente, String direccion, Estado estado, Estado encamino, Estado entregado, String fecha_registro, String fecha_encamino, String fecha_entrega) {
         this.referencia = referencia;
         this.articulos = articulos;
         this.cliente = cliente;
         this.direccion = direccion;
         this.estado = estado;
+        this.encamino = encamino;
         this.entregado = entregado;
         this.fecha_registro = fecha_registro;
+        this.fecha_encamino = fecha_encamino;
         this.fecha_entrega = fecha_entrega;
     }
-
-    public Pedido() {
-    }
-
 
 
     public String getReferencia() {
@@ -91,5 +96,20 @@ public class Pedido {
     }
     public String toString() {return direccion; }
 
+    public Estado getEncamino() {
+        return encamino;
+    }
+
+    public void setEncamino(Estado encamino) {
+        this.encamino = encamino;
+    }
+
+    public String getFecha_encamino() {
+        return fecha_encamino;
+    }
+
+    public void setFecha_encamino(String fecha_encamino) {
+        this.fecha_encamino = fecha_encamino;
+    }
 }
 

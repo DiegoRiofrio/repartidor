@@ -37,7 +37,7 @@ public class RepartosActivity extends AppCompatActivity {
         ArrayAdapter<Pedido>arrayAdapterPedido;
 
         EditText numA, nomC, dirP;
-        TextView estP, estE, fechReg, fechEnt;
+        TextView estP, estR, estE, fechReg, fechRep, fechEnt;
         ListView listV_pedidos;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -55,8 +55,10 @@ public class RepartosActivity extends AppCompatActivity {
             nomC = findViewById(R.id.txt_Cliente);
             dirP = findViewById(R.id.txt_Direccion);
             estP = (TextView) findViewById(R.id.txt_Estado);
+            estR = (TextView) findViewById(R.id.txt_EstadoReparto);
             estE = (TextView) findViewById(R.id.txt_EstadoEntregado);
             fechReg = (TextView) findViewById(R.id.txt_FechReg);
+            fechRep = (TextView) findViewById(R.id.txt_FechReparto);
             fechEnt = (TextView) findViewById(R.id.txt_FechEnt);
 
 
@@ -72,8 +74,10 @@ public class RepartosActivity extends AppCompatActivity {
                     nomC.setText(pedidoSelected.getCliente());
                     dirP.setText(pedidoSelected.getDireccion());
                     estP.setText(String.valueOf(pedidoSelected.getEstado()));
+                    estR.setText(String.valueOf(pedidoSelected.getEncamino()));
                     estE.setText(String.valueOf(pedidoSelected.getEntregado()));
                     fechReg.setText(String.valueOf(pedidoSelected.getFecha_registro()));
+                    fechRep.setText(String.valueOf(pedidoSelected.getFecha_encamino()));
                     fechEnt.setText(String.valueOf(pedidoSelected.getFecha_entrega()));
 
                 }
@@ -116,6 +120,7 @@ public class RepartosActivity extends AppCompatActivity {
             String cliente = nomC.getText().toString();
             String direccion = dirP.getText().toString();
             Estado estadoI = Estado.PROCESADO;
+            Estado estadoR = Estado.EN_CAMINO;
             Estado estadoE = Estado.ENTREGADO;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
             String date = sdf.format(new Date());
@@ -131,8 +136,10 @@ public class RepartosActivity extends AppCompatActivity {
                     p.setCliente(cliente);
                     p.setDireccion(direccion);
                     p.setEstado(estadoI);
-                    //p.setEntregado(null);
+                    p.setEncamino(estadoR);
+                    p.setEntregado(estadoE);
                     p.setFecha_registro(date);
+                    p.setFecha_encamino(fechRep.getText().toString().trim());
                     p.setFecha_entrega(fechEnt.getText().toString().trim());
                     repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
                     Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
@@ -148,8 +155,10 @@ public class RepartosActivity extends AppCompatActivity {
                 p.setCliente(nomC.getText().toString().trim());
                 p.setDireccion(dirP.getText().toString().trim());
                 p.setEstado(Estado.valueOf(estP.getText().toString().trim()));
+                p.setEncamino(estadoR);
                 p.setEntregado(estadoE);
                 p.setFecha_registro(fechReg.getText().toString().trim());
+                p.setFecha_encamino(fechRep.getText().toString().trim());
                 p.setFecha_entrega(fechEnt.getText().toString().trim());
                 repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
                 Toast.makeText(this, "Modificado", Toast.LENGTH_LONG).show();
@@ -163,6 +172,24 @@ public class RepartosActivity extends AppCompatActivity {
                 limpiarCajas();
                 break;
             }
+
+            case R.id.icon_enruta:{
+                Pedido p = new Pedido();
+                p.setReferencia(pedidoSelected.getReferencia());
+                p.setArticulos(Integer.parseInt(numA.getText().toString().trim()));
+                p.setCliente(nomC.getText().toString().trim());
+                p.setDireccion(dirP.getText().toString().trim());
+                p.setEstado(Estado.valueOf(estP.getText().toString().trim()));
+                p.setEncamino(estadoR);
+                p.setEntregado(estadoE);
+                p.setFecha_registro(fechReg.getText().toString().trim());
+                p.setFecha_encamino(date);
+                p.setFecha_entrega(fechEnt.getText().toString().trim());
+                repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
+                Toast.makeText(this, "En reparto", Toast.LENGTH_LONG).show();
+                limpiarCajas();
+                break;
+            }
             case R.id.icon_entrega:{
                 Pedido p = new Pedido();
                 p.setReferencia(pedidoSelected.getReferencia());
@@ -170,13 +197,14 @@ public class RepartosActivity extends AppCompatActivity {
                 p.setCliente(nomC.getText().toString().trim());
                 p.setDireccion(dirP.getText().toString().trim());
                 p.setEstado(Estado.valueOf(estP.getText().toString().trim()));
+                p.setEncamino(estadoR);
                 p.setEntregado(estadoE);
                 p.setFecha_registro(fechReg.getText().toString().trim());
+                p.setFecha_encamino(fechRep.getText().toString().trim());
                 p.setFecha_entrega(date);
                 repartidorRef.child(FirebaseReferences.REPARTO_REFERENCE).child(p.getReferencia()).setValue(p);
                 Toast.makeText(this, "Entregado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
-               // Toast.makeText(this, "Adios ", Toast.LENGTH_LONG).show();
                 break;
             }
             case R.id.icon_exit:{
@@ -194,8 +222,10 @@ public class RepartosActivity extends AppCompatActivity {
             nomC.setText("");
             dirP.setText("");
             estP.setText("");
+            estR.setText("");
             estE.setText("");
             fechReg.setText("");
+            fechRep.setText("");
             fechEnt.setText("");
 
     }

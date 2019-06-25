@@ -14,12 +14,18 @@
         android:title="@string/ModifyPedido"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/icon_enruta"
+        android:icon="@drawable/ic_enruta"
+        android:title="@string/Encamino"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/icon_del"
         android:icon="@drawable/ic_del"
         android:title="@string/DeletePedido" />
+
     <item android:id="@+id/icon_entrega"
         android:icon="@drawable/ic_entrega"
-        android:title="@string/buscarWifi"
+        android:title="@string/Entregado"
         app:showAsAction="always"/>
     <item android:id="@+id/icon_exit"
         android:icon="@drawable/ic_exit"

@@ -22,6 +22,7 @@
     <string name="Articulos">nº articulos</string>
     <string name="Estado">Detalle estado del pedido</string>
     <string name="Registrado">Registro fecha</string>
+    <string name="Encamino">En reparto</string>
     <string name="Entregado">Pendiente de entrega</string>
     <string name="Direccion">Dirección</string>
     <string name="Cliente">Nombre Cliente</string>
